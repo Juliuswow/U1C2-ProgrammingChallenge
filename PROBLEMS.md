@@ -85,16 +85,21 @@ positive numbers might not work for negative ones.
 ## Problem 3: Adjusted Digits
 
 ### `public Double adjustDigits(double userDouble)`
-
-`userDouble` is a number between `100.00` and `999.99` with up to 2
-decimal places. Add 1 to each of its five digits - a `9` wraps around to
-`0` - and return the result as a `Double` in the form `ddd.dd`.
-
-| Call | Returns |
-|---|---|
-| `adjustDigits(123.45)` | `234.56` |
-| `adjustDigits(999.99)` | `000.00` |
-| `adjustDigits(109.90)` | `210.01` |
+public double adjustDigits(double userDouble) {
+    int hundreds = (int)(userDouble / 100) % 10;
+    int tens = (int)(userDouble / 10) % 10;
+    int ones = (int)userDouble % 10;
+    int tenths = (int)(userDouble * 10) % 10;
+    int hundredths = (int)(userDouble * 100) % 10;
+    
+    hundreds = (hundreds + 1) % 10;
+    tens = (tens + 1) % 10;
+    ones = (ones + 1) % 10;
+    tenths = (tenths + 1) % 10;
+    hundredths = (hundredths + 1) % 10;
+    
+    return hundreds * 100 + tens * 10 + ones + tenths * 0.1 + hundredths * 0.01;
+}
 
 Hints:
 - `%` and `/` can pull individual digits out of a whole number. Experiment with `%` and groups of `10` . What does `1234%10` give you? What about `1234%100`? You want to extract the digits and then add them back together for the final result. 
